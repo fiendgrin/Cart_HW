@@ -86,9 +86,9 @@ function MiniProductMaker(id, image, Brand, Model, Money, Amount) {
   </div>
   <div class="BuySec">
     <div class="AddRemove">
-      <button>+</button>
+      <button id=${id} class="Plus">+</button>
       <p id=${id} class="Amount">${Amount}</p>
-      <button>-</button>
+      <button id=${id} class="Minus">-</button>
     </div>
     <p id=${id} class="Cost">${Money}$</p>
     <button id="Buy">Buy</button>
@@ -100,15 +100,122 @@ let AllDrops = DropDown.children;
 let amount;
 let check;
 let money;
-function AddAmount(params) {}
+let PlusAll = document.querySelectorAll(".Plus");
+let MinusAll = document.querySelectorAll(".Minus");
 const AddToCartAll = document.querySelectorAll(".CartBTN");
-AddToCartAll.forEach((toCartBtn) => {
-  toCartBtn.addEventListener("click", (e) => {
+
+// AddToCartAll.forEach((toCartBtn) => {
+//   toCartBtn.addEventListener("click", (e) => {
+//     check = false;
+//     for (let drop of AllDrops) {
+//       if (drop.id == toCartBtn.id) {
+//         check = true;
+//         amount = document.querySelectorAll(".Amount");
+//         money = document.querySelectorAll(".Cost");
+//         AllProducts.forEach((prod) => {
+//           money.forEach((co) => {
+//             if (prod.id == co.id && co.id == drop.id) {
+//               co.textContent = `${parseInt(co.textContent) + prod.Money}$`;
+//             }
+//           });
+//         });
+//         amount.forEach((am) => {
+//           if (am.id == drop.id) {
+//             am.textContent = `${parseInt(am.textContent) + 1}`;
+//             CounterOnCart = document.querySelector(".Counter");
+//             CounterOnCart.textContent = `${
+//               parseInt(CounterOnCart.textContent) + 1
+//             }`;
+//           }
+//         });
+//         break;
+//       }
+//     }
+
+//     AllProducts.forEach((product) => {
+//       if (product.id == toCartBtn.id && check == false) {
+//         DropDown.innerHTML += MiniProductMaker(
+//           product.id,
+//           product.Image,
+//           product.Brand,
+//           product.Model,
+//           product.Money,
+//           1
+//         );
+//         AllDrops = DropDown.children;
+//         PlusAll = document.querySelectorAll(".Plus");
+//         MinusAll = document.querySelectorAll(".Minus");
+//         CounterOnCart = document.querySelector(".Counter");
+//         CounterOnCart.textContent = `${
+//           parseInt(CounterOnCart.textContent) + 1
+//         }`;
+//       }
+//     });
+//   });
+// });
+
+// PlusAll.forEach((plus) => {
+//   plus.addEventListener("click", (e) => {
+//     for (let drop of AllDrops) {
+//       if (drop.id == plus.id) {
+//         amount = document.querySelectorAll(".Amount");
+//         money = document.querySelectorAll(".Cost");
+//         AllProducts.forEach((prod) => {
+//           money.forEach((co) => {
+//             if (prod.id == co.id && co.id == drop.id) {
+//               co.textContent = `${parseInt(co.textContent) + prod.Money}$`;
+//             }
+//           });
+//         });
+//         amount.forEach((am) => {
+//           if (am.id == drop.id) {
+//             am.textContent = `${parseInt(am.textContent) + 1}`;
+//             CounterOnCart = document.querySelector(".Counter");
+//             CounterOnCart.textContent = `${
+//               parseInt(CounterOnCart.textContent) + 1
+//             }`;
+//           }
+//         });
+//         break;
+//       }
+//     }
+//   });
+// });
+
+MinusAll.forEach((minus) => {
+  plus.addEventListener("click", (e) => {
+    for (let drop of AllDrops) {
+      if (drop.id == minus.id) {
+        amount = document.querySelectorAll(".Amount");
+        money = document.querySelectorAll(".Cost");
+        AllProducts.forEach((prod) => {
+          money.forEach((co) => {
+            if (prod.id == co.id && co.id == drop.id) {
+              co.textContent = `${parseInt(co.textContent) - prod.Money}$`;
+            }
+          });
+        });
+        amount.forEach((am) => {
+          if (am.id == drop.id) {
+            am.textContent = `${parseInt(am.textContent) + 1}`;
+            CounterOnCart = document.querySelector(".Counter");
+            CounterOnCart.textContent = `${
+              parseInt(CounterOnCart.textContent) - 1
+            }`;
+          }
+        });
+        break;
+      }
+    }
+  });
+});
+
+function AddToCartFunc(toCartBtn) {
+  return new Promise((resolve, reject) => {
     check = false;
     for (let drop of AllDrops) {
       if (drop.id == toCartBtn.id) {
         check = true;
-        console.log(drop.id);
         amount = document.querySelectorAll(".Amount");
         money = document.querySelectorAll(".Cost");
         AllProducts.forEach((prod) => {
@@ -118,7 +225,6 @@ AddToCartAll.forEach((toCartBtn) => {
             }
           });
         });
-
         amount.forEach((am) => {
           if (am.id == drop.id) {
             am.textContent = `${parseInt(am.textContent) + 1}`;
@@ -143,13 +249,94 @@ AddToCartAll.forEach((toCartBtn) => {
           1
         );
         AllDrops = DropDown.children;
-
+        PlusAll = document.querySelectorAll(".Plus");
+        MinusAll = document.querySelectorAll(".Minus");
         CounterOnCart = document.querySelector(".Counter");
         CounterOnCart.textContent = `${
           parseInt(CounterOnCart.textContent) + 1
         }`;
       }
     });
+
+    resolve();
+  });
+}
+
+function PlusFunc(PlusAll) {
+  return new Promise((resolve, reject) => {
+    PlusAll.forEach((plus) => {
+      plus.addEventListener("click", (e) => {
+        for (let drop of AllDrops) {
+          if (drop.id == plus.id) {
+            amount = document.querySelectorAll(".Amount");
+            money = document.querySelectorAll(".Cost");
+            AllProducts.forEach((prod) => {
+              money.forEach((cost) => {
+                if (prod.id == cost.id && cost.id == drop.id) {
+                  cost.textContent = `${parseInt(cost.textContent) + prod.Money}$`;
+                }
+              });
+            });
+            amount.forEach((am) => {
+              if (am.id == drop.id) {
+                am.textContent = `${parseInt(am.textContent) + 1}`;
+                CounterOnCart = document.querySelector(".Counter");
+                CounterOnCart.textContent = `${
+                  parseInt(CounterOnCart.textContent) + 1
+                }`;
+              }
+            });
+            break;
+          }
+        }
+      });
+    });
+    resolve();
+  });
+}
+
+function MinusFunc(MinusAll) {
+  return new Promise((resolve, reject) => {
+    MinusAll.forEach((minus) => {
+      minus.addEventListener("click", (e) => {
+        for (let drop of AllDrops) {
+          if (drop.id == minus.id) {
+            amount = document.querySelectorAll(".Amount");
+            money = document.querySelectorAll(".Cost");
+            AllProducts.forEach((prod) => {
+              money.forEach((cost) => {
+                if (prod.id == cost.id && cost.id == drop.id) {
+                  cost.textContent = `${parseInt(cost.textContent) - prod.Money}$`;
+                }
+              });
+            });
+            amount.forEach((am) => {
+              if (am.id == drop.id) {
+                am.textContent = `${parseInt(am.textContent) - 1}`;
+                CounterOnCart = document.querySelector(".Counter");
+                CounterOnCart.textContent = `${
+                  parseInt(CounterOnCart.textContent) - 1
+                }`;
+              }
+            });
+            break;
+          }
+        }
+      });
+    });
+    resolve();
+  });
+}
+
+AddToCartAll.forEach((toCartBtn) => {
+  toCartBtn.addEventListener("click", (e) => {
+    AddToCartFunc(toCartBtn)
+      .then(() => {
+        PlusFunc(PlusAll);
+      })
+      .then(() => {
+        MinusFunc(MinusAll);
+      });
   });
 });
 
@@ -171,4 +358,4 @@ CartBox.addEventListener("click", (e) => {
 
 window.addEventListener("click", () => {
   DropDown.style.display = "none";
-});
+}); 

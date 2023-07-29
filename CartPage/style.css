@@ -13,6 +13,16 @@ P {
   font-family: "Handjet";
 }
 
+@keyframes DropAnime {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 body {
   background: linear-gradient(90deg, rgb(195, 0, 255) 0%, rgb(0, 90, 225) 100%);
 }
@@ -72,11 +82,24 @@ body {
   box-shadow: rgba(180, 219, 235, 0.945) 0px 0px 8px 0px, rgb(255, 255, 255) 0px 0px 5px 0px;
   border: 2px solid rgb(255, 255, 255);
 }
-#NavBar .Box .Cart {
+#NavBar .Box .CartBox {
+  position: relative;
+}
+#NavBar .Box .CartBox .Cart {
   height: 40px;
   -o-object-fit: contain;
      object-fit: contain;
   cursor: pointer;
+}
+#NavBar .Box .CartBox > p {
+  position: absolute;
+  color: #ffffff;
+  right: 0;
+  top: 0;
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  transform: translate(3px, -8px);
 }
 
 #Main {
@@ -107,9 +130,10 @@ body {
   padding: 10px 5px;
   display: flex;
   flex-direction: column;
+  width: 426px;
 }
 #Main .Box .Cards .card > img {
-  width: 300px;
+  width: 426px;
 }
 #Main .Box .Cards .card .Bottom {
   margin-top: 12px;
@@ -123,7 +147,7 @@ body {
 }
 #Main .Box .Cards .card .Bottom .Text p {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 24px;
 }
 #Main .Box .Cards .card .Bottom .CartBTN {
   padding: 10px 6px;
@@ -152,6 +176,8 @@ body {
   right: 0;
   top: 0;
   border-radius: 20px;
+  animation-name: DropAnime;
+  animation-duration: 0.5s;
 }
 #Main .Box .DropDown::-webkit-scrollbar-track {
   border-radius: 20px;

@@ -38,6 +38,16 @@ P {
     border: 1px solid rgb(255, 255, 255);
   }
 }
+@keyframes DropAnime {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
 body {
   background: linear-gradient(
@@ -101,10 +111,23 @@ body {
         border: 2px solid rgb(255, 255, 255);
       }
     }
-    .Cart {
-      height: 40px;
-      object-fit: contain;
-      cursor: pointer;
+    .CartBox {
+      position: relative;
+      .Cart {
+        height: 40px;
+        object-fit: contain;
+        cursor: pointer;
+      }
+      > p {
+        position: absolute;
+        color: #ffffff;
+        right: 0;
+        top: 0;
+        font-size: 20px;
+        font-weight: 900;
+        cursor: pointer;
+        transform: translate(3px, -8px);
+      }
     }
   }
 }
@@ -125,6 +148,7 @@ body {
       flex-wrap: wrap;
       row-gap: 40px;
       column-gap: 40px;
+
       .card {
         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
           rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
@@ -133,8 +157,9 @@ body {
         padding: 10px 5px;
         display: flex;
         flex-direction: column;
+        width: 426px;
         > img {
-          width: 300px;
+          width: 426px;
         }
         .Bottom {
           margin-top: 12px;
@@ -148,7 +173,7 @@ body {
             }
             p {
               margin-top: 10px;
-              font-size: 14px;
+              font-size: 24px;
             }
           }
           .CartBTN {
@@ -171,6 +196,8 @@ body {
       right: 0;
       top: 0;
       border-radius: 20px;
+      animation-name: DropAnime;
+      animation-duration: 0.5s;
       &::-webkit-scrollbar-track {
         border-radius: 20px;
         background-color: transparent;
@@ -208,7 +235,7 @@ body {
             flex-direction: column;
             justify-content: center;
             color: black;
-            >p{
+            > p {
               margin-top: 4px;
             }
           }

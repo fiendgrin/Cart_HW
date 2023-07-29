@@ -35,6 +35,9 @@ body {
   align-items: center;
   padding: 10px 0;
   background: linear-gradient(90deg, rgb(195, 0, 255) 0%, rgb(0, 90, 225) 100%);
+  top: 0;
+  z-index: 1;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.24);
 }
 #NavBar .Box {
   width: 1440px;
@@ -71,7 +74,7 @@ body {
   border-radius: 20px;
   padding: 10px 16px;
   font-size: 14px;
-  width: 960px;
+  width: 66.6%;
   border: 2px solid transparent;
   transition: 0.3s;
 }
@@ -184,8 +187,9 @@ body {
   padding: 15px 20px;
   height: 600px;
   width: 400px;
+  top: 0px;
   right: 0;
-  top: 0;
+  z-index: 2;
   border-radius: 20px;
   animation-name: DropAnime;
   animation-duration: 0.5s;

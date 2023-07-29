@@ -1,6 +1,6 @@
 const DropDown = document.querySelector(".DropDown");
-const Cart = document.querySelector(".CartBox");
 const CartBox = document.querySelector(".CartBox");
+let CounterOnCart = document.querySelector(".Counter");
 
 let AllProducts = [
   {
@@ -90,7 +90,7 @@ function MiniProductMaker(id, image, Brand, Model, Money, Amount) {
       <p id=${id} class="Amount">${Amount}</p>
       <button>-</button>
     </div>
-    <p class="Cost">${Money}$</p>
+    <p id=${id} class="Cost">${Money}$</p>
     <button id="Buy">Buy</button>
   </div>
 </div>`;
@@ -99,26 +99,41 @@ function MiniProductMaker(id, image, Brand, Model, Money, Amount) {
 let AllDrops = DropDown.children;
 let amount;
 let check;
+let money;
+function AddAmount(params) {}
 const AddToCartAll = document.querySelectorAll(".CartBTN");
 AddToCartAll.forEach((toCartBtn) => {
   toCartBtn.addEventListener("click", (e) => {
     check = false;
     for (let drop of AllDrops) {
-      if (drop.id == e.target.id) {
+      if (drop.id == toCartBtn.id) {
         check = true;
         console.log(drop.id);
         amount = document.querySelectorAll(".Amount");
+        money = document.querySelectorAll(".Cost");
+        AllProducts.forEach((prod) => {
+          money.forEach((co) => {
+            if (prod.id == co.id && co.id == drop.id) {
+              co.textContent = `${parseInt(co.textContent) + prod.Money}$`;
+            }
+          });
+        });
+
         amount.forEach((am) => {
           if (am.id == drop.id) {
             am.textContent = `${parseInt(am.textContent) + 1}`;
+            CounterOnCart = document.querySelector(".Counter");
+            CounterOnCart.textContent = `${
+              parseInt(CounterOnCart.textContent) + 1
+            }`;
           }
         });
-
         break;
       }
     }
+
     AllProducts.forEach((product) => {
-      if (product.id == e.target.id && check == false) {
+      if (product.id == toCartBtn.id && check == false) {
         DropDown.innerHTML += MiniProductMaker(
           product.id,
           product.Image,
@@ -128,12 +143,17 @@ AddToCartAll.forEach((toCartBtn) => {
           1
         );
         AllDrops = DropDown.children;
+
+        CounterOnCart = document.querySelector(".Counter");
+        CounterOnCart.textContent = `${
+          parseInt(CounterOnCart.textContent) + 1
+        }`;
       }
     });
   });
 });
 
-Cart.addEventListener("click", (e) => {
+CartBox.addEventListener("click", () => {
   if (DropDown.style.display == "flex") {
     DropDown.style.display = "none";
   } else {

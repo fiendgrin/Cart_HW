@@ -1,35 +1,139 @@
 const DropDown = document.querySelector(".DropDown");
 const Cart = document.querySelector(".CartBox");
+const CartBox = document.querySelector(".CartBox");
+
 let AllProducts = [
-  { id: 1, Image: "AKG500.png", Brand: "AKG", Model: "Pro Audio K712" },
-  { id: 2, Image: "AT500.png", Brand: "Audio-Technica", Model: "ATH-M50X" },
-  { id: 3, Image: "Bayer500.png", Brand: "Sennheiser", Model: "HD 560S" },
-  { id: 4, Image: "Beats500.png", Brand: "Beyerdynamic", Model: "DT 770 PRO" },
-  { id: 5, Image: "Marshall500.png", Brand: "Marshall", Model: "Major IV" },
-  { id: 6, Image: "SENNHEISER500.png", Brand: "Beats", Model: "Studio3" },
+  {
+    id: 1,
+    Image: "AKG500.png",
+    Brand: "AKG",
+    Model: "Pro Audio K712",
+    Money: 280,
+  },
+  {
+    id: 2,
+    Image: "AT500.png",
+    Brand: "Audio-Technica",
+    Model: "ATH-M50X",
+    Money: 169,
+  },
+  {
+    id: 3,
+    Image: "SENNHEISER500.png",
+    Brand: "Sennheiser",
+    Model: "HD 560S",
+    Money: 179.95,
+  },
+  {
+    id: 4,
+    Image: "Bayer500.png",
+    Brand: "Beyerdynamic",
+    Model: "DT 770 PRO",
+    Money: 169,
+  },
+  {
+    id: 5,
+    Image: "Marshall500.png",
+    Brand: "Marshall",
+    Model: "Major IV",
+    Money: 149.99,
+  },
+  {
+    id: 6,
+    Image: "Beats500.png",
+    Brand: "Beats",
+    Model: "Studio3",
+    Money: 269.99,
+  },
 ];
 
 const Cards = document.querySelector(".Cards");
 
-function ProductMaker(id, image, Brand, Model) {
-  return `<div productID="${id}" class="card">
-    <img class="Headphone" src="./images/${image}" alt="" />
-    <div class="Bottom">
-      <div class="Text">
-        <h4 class="Brand">${Brand}</h4>
-        <p class="Model">${Model}</p>
-      </div>
-      <button class="CartBTN">Add to cart</button>
+function ProductMaker(id, image, Brand, Model, Money) {
+  return `<div id="${id}" productID="${id}" class="card">
+  <img class="Headphone" src="./images/${image}" alt="" />
+  <div class="Bottom">
+    <div class="Text">
+      <h4 class="Brand">${Brand}</h4>
+      <p class="Model">${Model}</p>
     </div>
-  </div>`;
+    <div class="BTNCost">
+      <p class="CostMain">${Money}$</p>
+      <button id="${id}" class="CartBTN">Add to cart</button>
+    </div>
+  </div>
+</div>`;
 }
 
 AllProducts.forEach((card) => {
-  Cards.innerHTML += ProductMaker(card.id, card.Image, card.Brand, card.Model);
+  Cards.innerHTML += ProductMaker(
+    card.id,
+    card.Image,
+    card.Brand,
+    card.Model,
+    card.Money
+  );
+});
+
+function MiniProductMaker(id, image, Brand, Model, Money, Amount) {
+  return `<div id="${id}" class="MiniCard">
+  <div class="left">
+    <img class="MiniHP" src="./images/${image}" alt="" />
+    <div class="MiniText">
+      <h4 class="Brand">${Brand}</h4>
+      <p class="Model">${Model}</p>
+    </div>
+  </div>
+  <div class="BuySec">
+    <div class="AddRemove">
+      <button>+</button>
+      <p id=${id} class="Amount">${Amount}</p>
+      <button>-</button>
+    </div>
+    <p class="Cost">${Money}$</p>
+    <button id="Buy">Buy</button>
+  </div>
+</div>`;
+}
+
+let AllDrops = DropDown.children;
+let amount;
+let check;
+const AddToCartAll = document.querySelectorAll(".CartBTN");
+AddToCartAll.forEach((toCartBtn) => {
+  toCartBtn.addEventListener("click", (e) => {
+    check = false;
+    for (let drop of AllDrops) {
+      if (drop.id == e.target.id) {
+        check = true;
+        console.log(drop.id);
+        amount = document.querySelectorAll(".Amount");
+        amount.forEach((am) => {
+          if (am.id == drop.id) {
+            am.textContent = `${parseInt(am.textContent) + 1}`;
+          }
+        });
+
+        break;
+      }
+    }
+    AllProducts.forEach((product) => {
+      if (product.id == e.target.id && check == false) {
+        DropDown.innerHTML += MiniProductMaker(
+          product.id,
+          product.Image,
+          product.Brand,
+          product.Model,
+          product.Money,
+          1
+        );
+        AllDrops = DropDown.children;
+      }
+    });
+  });
 });
 
 Cart.addEventListener("click", (e) => {
-  console.log(e);
   if (DropDown.style.display == "flex") {
     DropDown.style.display = "none";
   } else {
@@ -37,4 +141,14 @@ Cart.addEventListener("click", (e) => {
   }
 });
 
-DropDown.addEventListener("click", () => {});
+DropDown.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+
+CartBox.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+
+window.addEventListener("click", () => {
+  DropDown.style.display = "none";
+});

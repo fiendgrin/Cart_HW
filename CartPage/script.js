@@ -9,6 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
   } else {
     CounterOnCart.textContent = "0";
   }
+  DropDown.innerHTML = JSON.parse(localStorage.getItem("DropDownChildren")) || "";
   setupEventListeners();
 });
 
@@ -107,6 +108,7 @@ function MiniProductMaker(id, image, Brand, Model, Money, Amount) {
 }
 
 let AllDrops = DropDown.children; //<the items that are on sidebar (at first empty)
+console.log(AllDrops);
 let amount;
 let check; //<boolean to not add multiple of the same item
 let money;
@@ -122,6 +124,13 @@ function SetGetCounter() {
   CounterOnCart.textContent = JSON.parse(localStorage.getItem("CounterCart"));
 } //<setter and getter function for the counter on cart
 
+function SetGetDropDownObj() {
+  localStorage.setItem("DropDownChildren", JSON.stringify(DropDown.innerHTML));
+  DropDown.innerHTML = JSON.parse(localStorage.getItem("DropDownChildren"));
+}//<Set and get of dropdown
+
+
+
 function setupEventListeners() {
   for (let toCartBtn of AddToCartAll) {
     let clicks = 0;
@@ -130,7 +139,7 @@ function setupEventListeners() {
       AddToCartFunc(toCartBtn, clicks);
     });
   }
-}
+} //<to add to DOMContentLoaded event
 
 function AddToCartFunc(toCartBtn, clicks) {
   check = false;
@@ -168,9 +177,10 @@ function AddToCartFunc(toCartBtn, clicks) {
         product.Brand,
         product.Model,
         product.Money,
-        1
+        1       
       );
       AllDrops = DropDown.children;
+      SetGetDropDownObj();
       PlusAll = document.querySelectorAll(".Plus");
       MinusAll = document.querySelectorAll(".Minus");
       CounterOnCart = document.querySelector(".Counter");

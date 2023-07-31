@@ -9,7 +9,9 @@ window.addEventListener("DOMContentLoaded", () => {
   } else {
     CounterOnCart.textContent = "0";
   }
-  DropDown.innerHTML = JSON.parse(localStorage.getItem("DropDownChildren")) || "";
+  DropDown.innerHTML =
+    JSON.parse(localStorage.getItem("DropDownChildren")) || "";
+
   setupEventListeners();
 });
 
@@ -127,9 +129,7 @@ function SetGetCounter() {
 function SetGetDropDownObj() {
   localStorage.setItem("DropDownChildren", JSON.stringify(DropDown.innerHTML));
   DropDown.innerHTML = JSON.parse(localStorage.getItem("DropDownChildren"));
-}//<Set and get of dropdown
-
-
+} //<Set and get of dropdown
 
 function setupEventListeners() {
   for (let toCartBtn of AddToCartAll) {
@@ -177,7 +177,7 @@ function AddToCartFunc(toCartBtn, clicks) {
         product.Brand,
         product.Model,
         product.Money,
-        1       
+        1
       );
       AllDrops = DropDown.children;
       SetGetDropDownObj();
@@ -220,10 +220,9 @@ function PlusFunc(PlusAll, clicks) {
               }
             });
           });
-
-          break;
         }
       }
+      SetGetDropDownObj();
     });
   });
 }
@@ -248,6 +247,7 @@ function MinusFunc(MinusAll, clicks) {
               )}`;
               if (parseInt(am.textContent) == 0) {
                 am.parentElement.parentElement.parentElement.remove();
+                SetGetDropDownObj();
               }
               SetGetCounter();
             }
@@ -259,9 +259,9 @@ function MinusFunc(MinusAll, clicks) {
               }
             });
           });
-          break;
         }
       }
+      SetGetDropDownObj();
     });
   });
 }
@@ -272,6 +272,13 @@ CartBox.addEventListener("click", () => {
   } else {
     DropDown.style.display = "flex";
   }
+  // if (DropDown.innerHTML != "" && clicks !== 0) {
+  //   PlusFunc(PlusAll, 2);
+  //   MinusFunc(MinusAll, 2);
+  // } else if (DropDown.innerHTML != "" && clicks === 0) {
+  //   PlusFunc(PlusAll, 1);
+  //   MinusFunc(MinusAll, 1);
+  // }
 });
 
 DropDown.addEventListener("click", (e) => {

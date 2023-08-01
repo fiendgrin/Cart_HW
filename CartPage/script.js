@@ -137,11 +137,14 @@ function setupEventListeners() {
   for (let toCartBtn of AddToCartAll) {
     let clicks = 0;
     toCartBtn.addEventListener("click", (e) => {
+      isClicked = true;
       clicks++;
       AddToCartFunc(toCartBtn, clicks);
     });
   }
 } //<to add to DOMContentLoaded event
+
+let isClicked = false;
 
 function AddToCartFunc(toCartBtn, clicks) {
   check = false;
@@ -282,6 +285,14 @@ CartBox.addEventListener("click", () => {
   } else {
     DropDown.style.display = "flex";
   }
+});
+
+CartBox.addEventListener("click", () => {
+  if (isClicked == false) {
+    PlusFunc(document.querySelectorAll(".Plus"), 1);
+    MinusFunc(document.querySelectorAll(".Minus"), 1);
+  }
+  isClicked = false;
 });
 
 DropDown.addEventListener("click", (e) => {

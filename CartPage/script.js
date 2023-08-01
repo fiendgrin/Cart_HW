@@ -129,6 +129,8 @@ function SetGetCounter() {
 function SetGetDropDownObj() {
   localStorage.setItem("DropDownChildren", JSON.stringify(DropDown.innerHTML));
   DropDown.innerHTML = JSON.parse(localStorage.getItem("DropDownChildren"));
+  PlusAll = document.querySelectorAll(".Plus");
+  MinusAll = document.querySelectorAll(".Minus");
 } //<Set and get of dropdown
 
 function setupEventListeners() {
@@ -143,6 +145,7 @@ function setupEventListeners() {
 
 function AddToCartFunc(toCartBtn, clicks) {
   check = false;
+
   for (let drop of AllDrops) {
     if (drop.id == toCartBtn.id) {
       check = true;
@@ -223,6 +226,8 @@ function PlusFunc(PlusAll, clicks) {
         }
       }
       SetGetDropDownObj();
+      PlusFunc(document.querySelectorAll(".Plus"), 1);
+      MinusFunc(document.querySelectorAll(".Minus"), 1);
     });
   });
 }
@@ -247,7 +252,10 @@ function MinusFunc(MinusAll, clicks) {
               )}`;
               if (parseInt(am.textContent) == 0) {
                 am.parentElement.parentElement.parentElement.remove();
+                AllDrops = DropDown.children;
                 SetGetDropDownObj();
+                PlusFunc(document.querySelectorAll(".Plus"), 1);
+                MinusFunc(document.querySelectorAll(".Minus"), 1);
               }
               SetGetCounter();
             }
@@ -262,6 +270,8 @@ function MinusFunc(MinusAll, clicks) {
         }
       }
       SetGetDropDownObj();
+      PlusFunc(document.querySelectorAll(".Plus"), 1);
+      MinusFunc(document.querySelectorAll(".Minus"), 1);
     });
   });
 }
@@ -272,13 +282,6 @@ CartBox.addEventListener("click", () => {
   } else {
     DropDown.style.display = "flex";
   }
-  // if (DropDown.innerHTML != "" && clicks !== 0) {
-  //   PlusFunc(PlusAll, 2);
-  //   MinusFunc(MinusAll, 2);
-  // } else if (DropDown.innerHTML != "" && clicks === 0) {
-  //   PlusFunc(PlusAll, 1);
-  //   MinusFunc(MinusAll, 1);
-  // }
 });
 
 DropDown.addEventListener("click", (e) => {
